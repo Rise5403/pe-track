@@ -134,6 +134,8 @@
   .btn-dq:hover { background:#3a0808; }
   .btn-undq { background:#082a08; border:1px solid #1a5a1a; border-radius:5px; color:#84CC16; font-size:10px; font-weight:700; padding:4px 10px; cursor:pointer; font-family:inherit; }
   .btn-undq:hover { background:#0a3a0a; }
+  .btn-remove-slot { background:#1a1a0a; border:1px solid #3a3a1a; border-radius:5px; color:#aaa; font-size:10px; font-weight:700; padding:4px 10px; cursor:pointer; font-family:inherit; margin-left:auto; }
+  .btn-remove-slot:hover { background:#2a2a0a; color:#fff; }
  
   /* Footer */
   .footer { text-align:center; margin-top:20px; font-size:11px; color:#333; display:flex; align-items:center; justify-content:center; gap:12px; flex-wrap:wrap; }
@@ -583,6 +585,7 @@ function renderPlayerCard(idx){
     ${isMod && !p.dq ? `
     <div class="card-mod-bar">
       <button class="btn-dq" data-idx="${idx}">Disqualify</button>
+      ${!p.name && state.players.length > 2 ? `<button class="btn-remove-slot" data-idx="${idx}">Remove Slot</button>` : ""}
     </div>` : ""}
   </div>`;
 }
@@ -785,6 +788,31 @@ function bindApp(){
       requireMod("Confirm Disqualification",`Disqualify ${pname} from the competition? This can be reversed.`,()=>{
         state.players[idx].dq=true;scheduleSave();render();
       });
+    });
+  });
+ 
+  // Remove empty slot
+  document.querySelectorAll(".btn-remove-slot").forEach(btn=>{
+    btn.addEventListener("click",()=>{
+      const idx=parseInt(btn.dataset.idx);
+      if(state.players.length<=2) return;
+      if(state.players[idx].name) return; // safety — only unnamed
+      state.players.splice(idx,1);
+      localImages.splice(idx,1);
+      // Clean up UI state keys that referenced this index
+      const newOpenTopics={}, newActiveTabs={}, newNameEditing={};
+      Object.entries(openTopics).forEach(([k,v])=>{
+        const i=parseInt(k.split("_")[0]);
+        if(i<idx) newOpenTopics[k]=v;
+        else if(i>idx) newOpenTopics[(i-1)+"_"+k.split("_").slice(1).join("_")]=v;
+      });
+      Object.entries(activeTabs).forEach(([k,v])=>{
+        const i=parseInt(k);
+        if(i<idx) newActiveTabs[k]=v;
+        else if(i>idx) newActiveTabs[String(i-1)]=v;
+      });
+      openTopics=newOpenTopics; activeTabs=newActiveTabs; nameEditing=newNameEditing;
+      scheduleSave(); render();
     });
   });
  
