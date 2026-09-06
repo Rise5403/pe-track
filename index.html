@@ -7,144 +7,189 @@
 <style>
   * { box-sizing: border-box; margin: 0; padding: 0; }
   body { background: #0a0a0a; color: #fff; font-family: Inter, system-ui, sans-serif; min-height: 100vh; }
-
-  /* Config screen */
-  .config-wrap { min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: 20px; }
-  .config-box { width: 100%; max-width: 440px; }
-  .config-card { background: #111; border: 1px solid #222; border-radius: 12px; padding: 24px; display: flex; flex-direction: column; gap: 16px; }
-  .config-label { font-size: 12px; color: #777; margin-bottom: 6px; display: block; }
-  .config-input { width: 100%; background: #0a0a0a; border: 1px solid #333; border-radius: 8px; color: #fff; font-size: 14px; padding: 10px 12px; outline: none; font-family: monospace; }
-  .config-input:focus { border-color: #84CC16; }
-  .btn-connect { background: #84CC16; border: none; border-radius: 8px; color: #000; font-size: 14px; font-weight: 800; padding: 12px 0; cursor: pointer; width: 100%; transition: opacity 0.2s; }
-  .btn-connect:disabled { opacity: 0.6; cursor: default; }
-  .error-box { font-size: 12px; color: #ef4444; padding: 8px 12px; background: #1a0808; border-radius: 6px; border: 1px solid #5a1a1a; }
-  .steps-box { margin-top: 16px; background: #111; border: 1px solid #1a1a1a; border-radius: 10px; padding: 14px 16px; }
-  .steps-title { font-size: 11px; font-weight: 700; color: #555; margin-bottom: 8px; letter-spacing: 0.5px; }
-  .step-row { display: flex; gap: 10px; margin-bottom: 6px; }
-  .step-num { font-size: 11px; color: #84CC16; font-weight: 700; min-width: 16px; }
-  .step-txt { font-size: 11px; color: #555; line-height: 1.5; }
-
-  /* Main app */
-  .app { padding: 24px 16px; max-width: 900px; margin: 0 auto; }
-  .header { text-align: center; margin-bottom: 20px; }
-  .header-eye { font-size: 11px; font-weight: 700; color: #BEF264; letter-spacing: 2px; margin-bottom: 6px; }
-  .header-title { font-size: 28px; font-weight: 900; letter-spacing: -0.8px; margin-bottom: 4px; }
-  .header-sub { font-size: 13px; color: #555; }
-  .status-pill { margin-left: 10px; font-size: 12px; }
-
+ 
+  /* Config */
+  .config-wrap { min-height:100vh; display:flex; align-items:center; justify-content:center; padding:20px; }
+  .config-box { width:100%; max-width:440px; }
+  .config-card { background:#111; border:1px solid #222; border-radius:12px; padding:24px; display:flex; flex-direction:column; gap:16px; }
+  .config-label { font-size:12px; color:#777; margin-bottom:6px; display:block; }
+  .config-input { width:100%; background:#0a0a0a; border:1px solid #333; border-radius:8px; color:#fff; font-size:14px; padding:10px 12px; outline:none; font-family:monospace; }
+  .config-input:focus { border-color:#84CC16; }
+  .btn-connect { background:#84CC16; border:none; border-radius:8px; color:#000; font-size:14px; font-weight:800; padding:12px 0; cursor:pointer; width:100%; transition:opacity 0.2s; }
+  .btn-connect:disabled { opacity:0.6; cursor:default; }
+  .error-box { font-size:12px; color:#ef4444; padding:8px 12px; background:#1a0808; border-radius:6px; border:1px solid #5a1a1a; }
+  .steps-box { margin-top:16px; background:#111; border:1px solid #1a1a1a; border-radius:10px; padding:14px 16px; }
+  .steps-title { font-size:11px; font-weight:700; color:#555; margin-bottom:8px; letter-spacing:0.5px; }
+  .step-row { display:flex; gap:10px; margin-bottom:6px; }
+  .step-num { font-size:11px; color:#84CC16; font-weight:700; min-width:16px; }
+  .step-txt { font-size:11px; color:#555; line-height:1.5; }
+ 
+  /* App */
+  .app { padding:24px 16px; max-width:960px; margin:0 auto; }
+  .header { text-align:center; margin-bottom:20px; }
+  .header-eye { font-size:11px; font-weight:700; color:#BEF264; letter-spacing:2px; margin-bottom:6px; }
+  .header-title { font-size:28px; font-weight:900; letter-spacing:-0.8px; margin-bottom:4px; }
+  .header-sub { font-size:13px; color:#555; }
+  .status-pill { margin-left:10px; font-size:12px; }
+  .header-actions { display:flex; align-items:center; justify-content:center; gap:8px; margin-top:8px; flex-wrap:wrap; }
+  .btn-sm { background:transparent; border:1px solid #222; border-radius:6px; color:#555; font-size:11px; padding:4px 10px; cursor:pointer; font-family:inherit; }
+  .btn-sm:hover { border-color:#444; color:#aaa; }
+  .btn-mod { border-color:#444; color:#BEF264; }
+  .btn-mod:hover { border-color:#84CC16; }
+  .btn-add { border-color:#84CC16; color:#84CC16; font-weight:700; }
+  .btn-add:hover { background:#84CC1618; }
+ 
   /* Phase track */
-  .phase-track { display: flex; gap: 6px; margin-bottom: 16px; }
-  .phase-card { flex: 1; background: #111; border: 1px solid #222; border-radius: 8px; padding: 10px 12px; }
-  .phase-label { font-size: 10px; font-weight: 700; letter-spacing: 1px; margin-bottom: 4px; }
-  .phase-cert { font-size: 13px; font-weight: 800; color: #fff; }
-  .phase-levels { font-size: 11px; color: #555; margin-top: 2px; }
-  .phase-dots { display: flex; gap: 6px; margin-top: 8px; }
-  .phase-dot { width: 8px; height: 8px; border-radius: 50%; transition: background 0.4s; }
-
-  /* VS bar */
-  .vs-bar { background: #111; border: 1px solid #222; border-radius: 8px; padding: 12px 20px; display: flex; align-items: center; justify-content: center; gap: 24px; margin-bottom: 16px; }
-  .vs-level { font-size: 22px; font-weight: 900; }
-  .vs-name { font-size: 11px; color: #555; text-align: center; margin-top: 2px; }
-  .vs-text { font-size: 18px; color: #84CC16; font-weight: 900; }
-
+  .phase-track { display:flex; gap:6px; margin-bottom:16px; }
+  .phase-card { flex:1; background:#111; border:1px solid #222; border-radius:8px; padding:10px 12px; }
+  .phase-label { font-size:10px; font-weight:700; letter-spacing:1px; margin-bottom:4px; }
+  .phase-cert { font-size:13px; font-weight:800; color:#fff; }
+  .phase-levels { font-size:11px; color:#555; margin-top:2px; }
+  .phase-dots { display:flex; gap:5px; margin-top:8px; flex-wrap:wrap; }
+  .phase-dot { width:8px; height:8px; border-radius:50%; transition:background 0.4s; }
+ 
+  /* Leaderboard */
+  .leaderboard { background:#111; border:1px solid #222; border-radius:8px; padding:12px 16px; margin-bottom:16px; }
+  .lb-title { font-size:10px; font-weight:700; color:#555; letter-spacing:1.5px; margin-bottom:10px; }
+  .lb-row { display:flex; align-items:center; gap:10px; padding:6px 0; border-bottom:1px solid #1a1a1a; }
+  .lb-row:last-child { border-bottom:none; }
+  .lb-rank { font-size:13px; font-weight:900; min-width:20px; color:#555; }
+  .lb-rank.gold { color:#F59E0B; }
+  .lb-rank.silver { color:#aaa; }
+  .lb-rank.bronze { color:#cd7f32; }
+  .lb-name { flex:1; font-size:13px; font-weight:700; }
+  .lb-level { font-size:13px; font-weight:900; min-width:60px; text-align:right; }
+  .lb-xp { font-size:11px; color:#555; min-width:60px; text-align:right; }
+  .lb-dq { font-size:10px; font-weight:800; color:#ef4444; background:#2a0808; border:1px solid #5a1a1a; border-radius:4px; padding:2px 6px; margin-left:4px; }
+ 
   /* Player grid */
-  .player-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
-  @media(max-width: 600px) { .player-grid { grid-template-columns: 1fr; } .phase-track { flex-direction: column; } }
-
+  .player-grid { display:grid; grid-template-columns:1fr 1fr; gap:14px; }
+  .player-grid.p3 { grid-template-columns:1fr 1fr 1fr; }
+  .player-grid.p4,.player-grid.p5 { grid-template-columns:1fr 1fr; }
+  @media(max-width:640px) { .player-grid,.player-grid.p3,.player-grid.p4,.player-grid.p5 { grid-template-columns:1fr; } .phase-track { flex-direction:column; } }
+ 
   /* Player card */
-  .player-card { background: #0a0a0a; border: 1px solid #222; border-radius: 12px; overflow: hidden; display: flex; flex-direction: column; transition: border-color 0.4s, box-shadow 0.4s; }
-  .player-card.leading { }
-  .card-header { background: #111; padding: 18px 18px 14px; }
-  .card-top { display: flex; align-items: flex-start; justify-content: space-between; margin-bottom: 14px; }
-  .player-name { font-size: 20px; font-weight: 800; letter-spacing: -0.3px; cursor: text; min-height: 28px; }
-  .player-name.empty { color: #444; }
-  .name-input { background: transparent; border: none; border-bottom: 2px solid #84CC16; color: #fff; font-size: 20px; font-weight: 800; outline: none; width: 100%; font-family: inherit; }
-  .player-phase { font-size: 12px; font-weight: 600; margin-top: 4px; }
-  .leading-badge { margin-left: 8px; color: #F59E0B; font-size: 11px; }
-  .level-display { text-align: right; }
-  .level-num { font-size: 52px; font-weight: 900; line-height: 1; letter-spacing: -2px; }
-  .level-lbl { font-size: 11px; color: #555; font-weight: 600; margin-top: 2px; }
-
+  .player-card { background:#0a0a0a; border:1px solid #222; border-radius:12px; overflow:hidden; display:flex; flex-direction:column; transition:border-color 0.4s,box-shadow 0.4s; position:relative; }
+  .card-header { background:#111; padding:16px 16px 12px; }
+  .card-top { display:flex; align-items:flex-start; justify-content:space-between; margin-bottom:12px; }
+  .player-name { font-size:18px; font-weight:800; letter-spacing:-0.3px; cursor:text; min-height:26px; }
+  .player-name.empty { color:#444; font-size:14px; }
+  .name-input { background:transparent; border:none; border-bottom:2px solid #84CC16; color:#fff; font-size:18px; font-weight:800; outline:none; width:100%; font-family:inherit; }
+  .player-phase { font-size:11px; font-weight:600; margin-top:3px; }
+  .leading-badge { margin-left:8px; color:#F59E0B; font-size:10px; }
+  .level-display { text-align:right; flex-shrink:0; }
+  .level-num { font-size:46px; font-weight:900; line-height:1; letter-spacing:-2px; }
+  .level-lbl { font-size:10px; color:#555; font-weight:600; margin-top:2px; }
+ 
+  /* DQ overlay */
+  .dq-banner { position:absolute; top:0; left:0; right:0; background:rgba(239,68,68,0.12); border-bottom:2px solid #ef4444; padding:6px 12px; display:flex; align-items:center; justify-content:space-between; z-index:10; }
+  .dq-text { font-size:11px; font-weight:800; color:#ef4444; letter-spacing:1px; }
+  .dq-overlay { position:absolute; inset:0; background:rgba(10,10,10,0.55); z-index:5; pointer-events:none; border-radius:12px; }
+ 
   /* XP bars */
-  .bar-wrap { margin-bottom: 8px; }
-  .bar-meta { display: flex; justify-content: space-between; margin-bottom: 4px; font-size: 11px; color: #555; }
-  .bar-track { background: #222; border-radius: 4px; height: 8px; overflow: hidden; }
-  .bar-fill { height: 100%; border-radius: 4px; transition: width 0.6s cubic-bezier(.4,0,.2,1); }
-
+  .bar-wrap { margin-bottom:6px; }
+  .bar-meta { display:flex; justify-content:space-between; margin-bottom:3px; font-size:10px; color:#555; }
+  .bar-track { background:#222; border-radius:4px; height:7px; overflow:hidden; }
+  .bar-fill { height:100%; border-radius:4px; transition:width 0.6s cubic-bezier(.4,0,.2,1); }
+ 
   /* Tabs */
-  .tabs { display: flex; border-bottom: 1px solid #222; }
-  .tab-btn { flex: 1; padding: 10px 0; background: transparent; border: none; border-bottom: 2px solid transparent; color: #555; font-size: 12px; font-weight: 700; cursor: pointer; font-family: inherit; transition: color 0.2s, border-color 0.2s; }
-  .tab-btn.active { border-bottom-color: currentColor; }
-
+  .tabs { display:flex; border-bottom:1px solid #222; }
+  .tab-btn { flex:1; padding:9px 0; background:transparent; border:none; border-bottom:2px solid transparent; color:#555; font-size:11px; font-weight:700; cursor:pointer; font-family:inherit; }
+  .tab-btn.active { border-bottom-color:currentColor; }
+ 
   /* Card body */
-  .card-body { padding: 12px 14px; flex: 1; overflow-y: auto; max-height: 400px; }
-
-  /* Topic rows */
-  .topic-row { margin-bottom: 6px; }
-  .topic-head { display: flex; align-items: center; gap: 8px; padding: 7px 10px; background: #111; border-radius: 6px; cursor: pointer; border: 1px solid #222; transition: opacity 0.2s; }
-  .topic-head.gated { opacity: 0.35; cursor: default; background: #0a0a0a; border-color: #1a1a1a; }
-  .topic-name { flex: 1; font-size: 12px; color: #e2e2e2; line-height: 1.3; }
-  .topic-name.gated { color: #444; }
-  .topic-xp { font-size: 12px; font-weight: 700; min-width: 40px; text-align: right; }
-  .topic-arrow { font-size: 10px; color: #444; }
-  .topic-components { background: #0a0a0a; border-radius: 0 0 6px 6px; padding: 8px 10px; border: 1px solid #222; border-top: none; }
-  .comp-row { display: flex; align-items: center; gap: 8px; margin-bottom: 6px; cursor: pointer; }
-  .comp-row input[type=checkbox] { width: 14px; height: 14px; cursor: pointer; }
-  .comp-name { font-size: 12px; color: #777; flex: 1; }
-  .comp-xp { font-size: 12px; font-weight: 700; }
-
-  /* Cert badges */
-  .cert-list { display: flex; flex-direction: column; gap: 10px; }
-  .cert-badge { border-radius: 8px; padding: 10px 14px; display: flex; align-items: center; gap: 10px; transition: all 0.3s; border: 1px solid #333; }
-  .cert-icon { width: 36px; height: 36px; border-radius: 4px; display: flex; align-items: center; justify-content: center; font-size: 18px; flex-shrink: 0; overflow: hidden; }
-  .cert-icon img { width: 100%; height: 100%; object-fit: contain; }
-  .cert-info { flex: 1; }
-  .cert-name { font-size: 13px; font-weight: 700; }
-  .cert-status { font-size: 11px; color: #555; margin-top: 2px; }
-  .cert-upload-btn { border: none; border-radius: 6px; font-size: 11px; font-weight: 700; padding: 5px 10px; cursor: pointer; }
-  .cert-note { margin-top: 8px; padding: 10px 12px; background: #111; border-radius: 8px; font-size: 11px; color: #555; line-height: 1.6; }
-
+  .card-body { padding:10px 12px; flex:1; overflow-y:auto; max-height:380px; }
+ 
+  /* Topics */
+  .topic-row { margin-bottom:5px; }
+  .topic-head { display:flex; align-items:center; gap:8px; padding:6px 9px; background:#111; border-radius:6px; cursor:pointer; border:1px solid #222; }
+  .topic-head.gated { opacity:0.35; cursor:default; background:#0a0a0a; border-color:#1a1a1a; }
+  .topic-name { flex:1; font-size:11px; color:#e2e2e2; line-height:1.3; }
+  .topic-name.gated { color:#444; }
+  .topic-xp { font-size:11px; font-weight:700; min-width:40px; text-align:right; }
+  .topic-arrow { font-size:9px; color:#444; }
+  .topic-components { background:#0a0a0a; border-radius:0 0 6px 6px; padding:7px 9px; border:1px solid #222; border-top:none; }
+  .comp-row { display:flex; align-items:center; gap:8px; margin-bottom:5px; cursor:pointer; }
+  .comp-row input[type=checkbox] { width:13px; height:13px; cursor:pointer; }
+  .comp-name { font-size:11px; color:#777; flex:1; }
+  .comp-xp { font-size:11px; font-weight:700; }
+ 
+  /* Certs */
+  .cert-list { display:flex; flex-direction:column; gap:9px; }
+  .cert-badge { border-radius:8px; padding:9px 12px; display:flex; align-items:center; gap:9px; border:1px solid #333; }
+  .cert-icon { width:32px; height:32px; border-radius:4px; display:flex; align-items:center; justify-content:center; font-size:16px; flex-shrink:0; overflow:hidden; }
+  .cert-icon img { width:100%; height:100%; object-fit:contain; }
+  .cert-info { flex:1; }
+  .cert-name { font-size:12px; font-weight:700; }
+  .cert-status { font-size:10px; color:#555; margin-top:2px; }
+  .cert-actions { display:flex; gap:5px; flex-shrink:0; }
+  .cert-btn { border:none; border-radius:5px; font-size:10px; font-weight:700; padding:4px 9px; cursor:pointer; font-family:inherit; }
+  .cert-btn-view { background:#222; color:#aaa; }
+  .cert-btn-clear { background:#2a0a0a; color:#ef4444; border:1px solid #5a1a1a; }
+  .cert-note { margin-top:8px; padding:9px 11px; background:#111; border-radius:7px; font-size:10px; color:#555; line-height:1.6; }
+ 
+  /* Mod controls on card */
+  .card-mod-bar { display:flex; gap:6px; padding:8px 12px; border-top:1px solid #1a1a1a; background:#0a0a0a; }
+  .btn-dq { background:#2a0808; border:1px solid #5a1a1a; border-radius:5px; color:#ef4444; font-size:10px; font-weight:700; padding:4px 10px; cursor:pointer; font-family:inherit; }
+  .btn-dq:hover { background:#3a0808; }
+  .btn-undq { background:#082a08; border:1px solid #1a5a1a; border-radius:5px; color:#84CC16; font-size:10px; font-weight:700; padding:4px 10px; cursor:pointer; font-family:inherit; }
+  .btn-undq:hover { background:#0a3a0a; }
+ 
   /* Footer */
-  .footer { text-align: center; margin-top: 20px; font-size: 11px; color: #333; display: flex; align-items: center; justify-content: center; gap: 12px; flex-wrap: wrap; }
-  .btn-disconnect { background: transparent; border: 1px solid #222; border-radius: 4px; color: #333; font-size: 10px; padding: 2px 8px; cursor: pointer; font-family: inherit; }
-  .btn-refresh { background: transparent; border: 1px solid #222; border-radius: 6px; color: #555; font-size: 11px; padding: 4px 10px; cursor: pointer; font-family: inherit; margin-top: 6px; }
-
-  input[type=file] { display: none; }
-
-  /* Cert action buttons */
-  .cert-actions { display: flex; gap: 6px; flex-shrink: 0; }
-  .cert-btn { border: none; border-radius: 6px; font-size: 11px; font-weight: 700; padding: 5px 10px; cursor: pointer; font-family: inherit; }
-  .cert-btn-view { background: #222; color: #aaa; }
-  .cert-btn-view:hover { background: #2a2a2a; color: #fff; }
-  .cert-btn-clear { background: #2a0a0a; color: #ef4444; border: 1px solid #5a1a1a; }
-  .cert-btn-clear:hover { background: #3a0a0a; }
-
+  .footer { text-align:center; margin-top:20px; font-size:11px; color:#333; display:flex; align-items:center; justify-content:center; gap:12px; flex-wrap:wrap; }
+ 
   /* Lightbox */
-  .lightbox { position: fixed; inset: 0; background: rgba(0,0,0,0.92); display: flex; align-items: center; justify-content: center; z-index: 9999; cursor: zoom-out; padding: 20px; }
-  .lightbox img { max-width: 100%; max-height: 90vh; object-fit: contain; border-radius: 6px; box-shadow: 0 0 60px rgba(0,0,0,0.8); }
-  .lightbox-close { position: fixed; top: 16px; right: 20px; background: transparent; border: none; color: #aaa; font-size: 28px; cursor: pointer; line-height: 1; font-family: inherit; }
-  .lightbox-close:hover { color: #fff; }
-  .lightbox-label { position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%); font-size: 12px; color: #555; background: #111; border: 1px solid #222; border-radius: 6px; padding: 4px 12px; }
+  .lightbox { position:fixed; inset:0; background:rgba(0,0,0,0.92); display:flex; align-items:center; justify-content:center; z-index:9999; cursor:zoom-out; padding:20px; }
+  .lightbox img { max-width:100%; max-height:90vh; object-fit:contain; border-radius:6px; }
+  .lightbox-close { position:fixed; top:16px; right:20px; background:transparent; border:none; color:#aaa; font-size:28px; cursor:pointer; font-family:inherit; }
+  .lightbox-label { position:fixed; bottom:20px; left:50%; transform:translateX(-50%); font-size:12px; color:#555; background:#111; border:1px solid #222; border-radius:6px; padding:4px 12px; white-space:nowrap; }
+ 
+  /* PIN modal */
+  .modal-wrap { position:fixed; inset:0; background:rgba(0,0,0,0.85); display:flex; align-items:center; justify-content:center; z-index:8888; padding:20px; }
+  .modal-box { background:#111; border:1px solid #333; border-radius:12px; padding:24px; width:100%; max-width:340px; }
+  .modal-title { font-size:16px; font-weight:800; margin-bottom:6px; }
+  .modal-sub { font-size:12px; color:#555; margin-bottom:16px; line-height:1.5; }
+  .modal-input { width:100%; background:#0a0a0a; border:1px solid #333; border-radius:8px; color:#fff; font-size:18px; padding:10px 12px; outline:none; font-family:monospace; text-align:center; letter-spacing:4px; }
+  .modal-input:focus { border-color:#84CC16; }
+  .modal-actions { display:flex; gap:8px; margin-top:16px; }
+  .modal-btn { flex:1; border:none; border-radius:7px; font-size:13px; font-weight:700; padding:10px 0; cursor:pointer; font-family:inherit; }
+  .modal-btn-confirm { background:#84CC16; color:#000; }
+  .modal-btn-cancel { background:#222; color:#aaa; }
+  .modal-error { font-size:11px; color:#ef4444; margin-top:8px; text-align:center; }
+ 
+  input[type=file] { display:none; }
 </style>
 </head>
 <body>
-
+ 
 <div id="root"></div>
 <div id="lightbox" class="lightbox" style="display:none">
   <button class="lightbox-close" id="lb-close">✕</button>
   <img id="lb-img" src="" alt="Certificate" />
   <div class="lightbox-label" id="lb-label"></div>
 </div>
-
+<div id="modal-wrap" class="modal-wrap" style="display:none">
+  <div class="modal-box">
+    <div class="modal-title" id="modal-title">Moderator PIN</div>
+    <div class="modal-sub" id="modal-sub">Enter your moderator PIN to continue.</div>
+    <input class="modal-input" id="modal-pin" type="password" maxlength="8" placeholder="••••" />
+    <div class="modal-error" id="modal-error" style="display:none"></div>
+    <div class="modal-actions">
+      <button class="modal-btn modal-btn-cancel" id="modal-cancel">Cancel</button>
+      <button class="modal-btn modal-btn-confirm" id="modal-confirm">Confirm</button>
+    </div>
+  </div>
+</div>
+ 
 <script>
 // ── Constants ─────────────────────────────────────────────────────────────────
-
+ 
 const PHASES = [
   { id:1, cert:"SC-300", label:"Identity",  levels:[1,15],  color:"#84CC16" },
   { id:2, cert:"MD-102", label:"Endpoint",  levels:[16,30], color:"#aaaaaa" },
   { id:3, cert:"SC-401", label:"Data",      levels:[31,45], color:"#BEF264" },
 ];
-
+ 
 const TOPICS = [
   { id:"t1",  phase:1, name:"Authentication protocols from the wire up" },
   { id:"t2",  phase:1, name:"User identities and tenant management" },
@@ -168,16 +213,16 @@ const TOPICS = [
   { id:"t6c", phase:3, name:"Compliance: data layer" },
   { id:"t7c", phase:3, name:"Architectural decision-making: data" },
 ];
-
+ 
 const XP_COMPS = [
   { id:"quiz",        label:"Concept Quiz",  xp:60 },
   { id:"buildlab",    label:"Build Lab",     xp:50 },
   { id:"forensiclab", label:"Forensic Lab",  xp:50 },
   { id:"artifact",    label:"Artifact",      xp:40 },
 ];
-
+ 
 const THRESHOLDS = (() => {
-  const t = [0];
+  const t=[0];
   for(let i=1;i<=3;i++)  t.push(t[t.length-1]+60);
   for(let i=4;i<=7;i++)  t.push(t[t.length-1]+100);
   for(let i=8;i<=11;i++) t.push(t[t.length-1]+130);
@@ -192,251 +237,324 @@ const THRESHOLDS = (() => {
   for(let i=42;i<=45;i++)t.push(t[t.length-1]+160);
   return t;
 })();
-
+ 
 const GATES   = {15:"SC-300",30:"MD-102",45:"SC-401"};
 const GATE_XP = {15:1190,30:1190,45:1190};
-
-const DEFAULT_PLAYER = {name:"",xp:0,topics:{},certs:{},certImages:{}};
-const DEFAULT_STATE  = {player1:{...DEFAULT_PLAYER},player2:{...DEFAULT_PLAYER}};
-
+const MAX_PLAYERS = 5;
+ 
+const DEFAULT_PLAYER = {name:"",xp:0,topics:{},certs:{},certImages:{},dq:false};
+ 
+// ── App State ─────────────────────────────────────────────────────────────────
+ 
+let binId   = localStorage.getItem("jb_bin")  || "";
+let apiKey  = localStorage.getItem("jb_key")  || "";
+let state   = { players:[ {...DEFAULT_PLAYER}, {...DEFAULT_PLAYER} ], modPin:"", version:2 };
+let localImages   = [];  // per-player cert images (not synced)
+let openTopics    = {};
+let activeTabs    = {};
+let nameEditing   = {};
+let isMod         = false;
+let statusText    = "";
+let statusColor   = "#555";
+let saveTimer     = null;
+let pollTimer     = null;
+ 
+// pending modal action
+let modalAction   = null;
+ 
 // ── Helpers ───────────────────────────────────────────────────────────────────
-
+ 
 function getLevel(xp, certs) {
-  let level = 1;
+  let level=1;
   for(let i=1;i<=45;i++){
-    if(xp < THRESHOLDS[i]) break;
-    if(GATES[i] && !certs[GATES[i]]) break;
-    level = i;
+    if(xp<THRESHOLDS[i]) break;
+    if(GATES[i]&&!certs[GATES[i]]) break;
+    level=i;
   }
   return level;
 }
-
-function getPhase(level) {
-  return level<=15 ? 1 : level<=30 ? 2 : 3;
+function getPhase(level){ return level<=15?1:level<=30?2:3; }
+function getPhaseXP(xp,phase){ const s=[0,0,THRESHOLDS[15],THRESHOLDS[30]]; return Math.max(0,xp-s[phase]); }
+function phaseColor(phase){ return PHASES[phase-1].color; }
+function deepClone(o){ return JSON.parse(JSON.stringify(o)); }
+ 
+function getRankedPlayers() {
+  return state.players
+    .map((p,i)=>({...p,idx:i,level:getLevel(p.xp,p.certs)}))
+    .sort((a,b)=>{
+      if(a.dq!==b.dq) return a.dq?1:-1;
+      if(b.level!==a.level) return b.level-a.level;
+      return b.xp-a.xp;
+    });
 }
-
-function getPhaseXP(xp, phase) {
-  const starts = [0,0,THRESHOLDS[15],THRESHOLDS[30]];
-  return Math.max(0, xp - starts[phase]);
-}
-
-function phaseColor(phase) { return PHASES[phase-1].color; }
-
-function deepClone(obj) { return JSON.parse(JSON.stringify(obj)); }
-
+ 
 // ── JSONbin API ───────────────────────────────────────────────────────────────
-
-async function jbLoad(binId, apiKey) {
-  const res = await fetch(`https://api.jsonbin.io/v3/b/${binId}/latest`, {
-    headers: { "X-Master-Key": apiKey.trim(), "X-Bin-Meta": "false" }
+ 
+async function jbLoad(bId,aKey){
+  const res=await fetch(`https://api.jsonbin.io/v3/b/${bId}/latest`,{
+    headers:{"X-Master-Key":aKey.trim(),"X-Bin-Meta":"false"}
   });
-  if(!res.ok) {
-    const txt = await res.text().catch(()=>"");
-    throw new Error(`${res.status} — ${txt.slice(0,120)}`);
-  }
-  const data = await res.json();
-  return data.record ?? data;
+  if(!res.ok){const t=await res.text().catch(()=>"");throw new Error(`${res.status} — ${t.slice(0,120)}`);}
+  const data=await res.json();
+  return data.record??data;
 }
-
-async function jbSave(binId, apiKey, state) {
-  const payload = {
-    player1: {...state.player1, certImages:{}},
-    player2: {...state.player2, certImages:{}}
-  };
-  const res = await fetch(`https://api.jsonbin.io/v3/b/${binId}`, {
-    method: "PUT",
-    headers: {"Content-Type":"application/json","X-Master-Key":apiKey.trim(),"X-Bin-Versioning":"false"},
-    body: JSON.stringify(payload)
+ 
+async function jbSave(bId,aKey,st){
+  // Strip cert images from remote save to keep size small
+  const slim={...st,players:st.players.map(p=>({...p,certImages:{}}))};
+  const res=await fetch(`https://api.jsonbin.io/v3/b/${bId}`,{
+    method:"PUT",
+    headers:{"Content-Type":"application/json","X-Master-Key":aKey.trim(),"X-Bin-Versioning":"false"},
+    body:JSON.stringify(slim)
   });
-  if(!res.ok) {
-    const txt = await res.text().catch(()=>"");
-    throw new Error(`${res.status} — ${txt.slice(0,120)}`);
+  if(!res.ok){const t=await res.text().catch(()=>"");throw new Error(`${res.status} — ${t.slice(0,120)}`);}
+}
+ 
+// ── Modal PIN system ──────────────────────────────────────────────────────────
+ 
+function openModal(title, sub, onConfirm) {
+  modalAction = onConfirm;
+  document.getElementById("modal-title").textContent = title;
+  document.getElementById("modal-sub").textContent = sub;
+  document.getElementById("modal-pin").value = "";
+  document.getElementById("modal-error").style.display = "none";
+  document.getElementById("modal-wrap").style.display = "flex";
+  setTimeout(()=>document.getElementById("modal-pin").focus(), 50);
+}
+ 
+function closeModal() {
+  document.getElementById("modal-wrap").style.display = "none";
+  modalAction = null;
+}
+ 
+function checkPin(entered) {
+  if(!state.modPin) {
+    // First time — set the PIN
+    if(entered.length < 4) { showModalError("PIN must be at least 4 characters."); return; }
+    state.modPin = entered;
+    isMod = true;
+    closeModal();
+    if(modalAction) { const fn=modalAction; modalAction=null; fn(); }
+    scheduleSave();
+    render();
+    return;
+  }
+  if(entered === state.modPin) {
+    isMod = true;
+    closeModal();
+    if(modalAction) { const fn=modalAction; modalAction=null; fn(); }
+    render();
+  } else {
+    showModalError("Incorrect PIN.");
   }
 }
-
-// ── App State ─────────────────────────────────────────────────────────────────
-
-let binId  = localStorage.getItem("jb_bin")  || "";
-let apiKey = localStorage.getItem("jb_key")  || "";
-let state  = deepClone(DEFAULT_STATE);
-let localImages = {player1:{}, player2:{}};
-let openTopics = {};   // topicId -> bool
-let activeTabs = {player1:"topics", player2:"topics"};
-let nameEditing = {player1:false, player2:false};
-let statusText = "";
-let statusColor = "#555";
-let saveTimer = null;
-let pollTimer = null;
-
-// ── Render engine (vanilla DOM) ───────────────────────────────────────────────
-
-function render() {
-  const root = document.getElementById("root");
-  const configured = binId && apiKey;
-  if(!configured) { root.innerHTML = renderConfig(); bindConfig(); return; }
-  root.innerHTML = renderApp();
-  bindApp();
+ 
+function showModalError(msg) {
+  const el=document.getElementById("modal-error");
+  el.textContent=msg; el.style.display="block";
 }
-
+ 
+function requireMod(title, sub, fn) {
+  if(isMod) { fn(); return; }
+  openModal(title, sub, fn);
+}
+ 
+// ── Lightbox ──────────────────────────────────────────────────────────────────
+ 
+function openLightbox(src,label){
+  document.getElementById("lb-img").src=src;
+  document.getElementById("lb-label").textContent=label+" — click anywhere to close";
+  document.getElementById("lightbox").style.display="flex";
+  document.body.style.overflow="hidden";
+}
+function closeLightbox(){
+  document.getElementById("lightbox").style.display="none";
+  document.body.style.overflow="";
+}
+ 
 // ── Config Screen ─────────────────────────────────────────────────────────────
-
-function renderConfig() {
+ 
+function renderConfig(){
   return `
-  <div class="config-wrap">
-    <div class="config-box">
-      <div class="header" style="margin-bottom:28px">
-        <div class="header-eye">PRINCIPAL ENGINEER TRACK</div>
-        <div class="header-title">Connect your scoreboard</div>
-        <div class="header-sub" style="margin-top:6px;line-height:1.6">
-          Enter your JSONbin credentials. Both players use the same Bin ID and API Key.
-        </div>
-      </div>
-      <div class="config-card">
-        <div>
-          <label class="config-label">Bin ID</label>
-          <input id="inp-bin" class="config-input" placeholder="e.g. 6a9ddb0a..." value="${binId}" />
-        </div>
-        <div>
-          <label class="config-label">Master API Key</label>
-          <input id="inp-key" class="config-input" type="password" placeholder="$2a$10$..." value="${apiKey}" />
-        </div>
-        <div id="cfg-error" class="error-box" style="display:none"></div>
-        <button id="btn-connect" class="btn-connect">Connect</button>
-      </div>
-      <div class="steps-box">
-        <div class="steps-title">SETUP — JSONBIN.IO</div>
-        ${["Go to jsonbin.io and create a free account",
-           'Click "New Bin", paste the default JSON content, click Save',
-           "Copy the Bin ID from the URL (24-char string)",
-           "Go to API Keys → create Master Key → copy it",
-           "Paste both above and click Connect",
-           "Share your Bin ID + API Key with your competitor"].map((s,i)=>`
-          <div class="step-row">
-            <span class="step-num">${i+1}.</span>
-            <span class="step-txt">${s}</span>
-          </div>`).join("")}
-      </div>
+  <div class="config-wrap"><div class="config-box">
+    <div class="header" style="margin-bottom:28px">
+      <div class="header-eye">PRINCIPAL ENGINEER TRACK</div>
+      <div class="header-title">Connect your scoreboard</div>
+      <div class="header-sub" style="margin-top:6px;line-height:1.6">Enter your JSONbin credentials. All players use the same Bin ID and API Key.</div>
     </div>
-  </div>`;
+    <div class="config-card">
+      <div><label class="config-label">Bin ID</label><input id="inp-bin" class="config-input" placeholder="e.g. 6a9ddb0a..." value="${binId}" /></div>
+      <div><label class="config-label">Master API Key</label><input id="inp-key" class="config-input" type="password" placeholder="$2a$10$..." value="${apiKey}" /></div>
+      <div id="cfg-error" class="error-box" style="display:none"></div>
+      <button id="btn-connect" class="btn-connect">Connect</button>
+    </div>
+    <div class="steps-box">
+      <div class="steps-title">SETUP — JSONBIN.IO</div>
+      ${["Go to jsonbin.io and create a free account",
+         'Click "New Bin", paste {} as content, click Save',
+         "Copy the Bin ID from the URL (24-char string)",
+         "Go to API Keys → create Master Key → copy it",
+         "Paste both above and click Connect",
+         "Share your Bin ID + API Key with all players"].map((s,i)=>`
+        <div class="step-row"><span class="step-num">${i+1}.</span><span class="step-txt">${s}</span></div>`).join("")}
+    </div>
+  </div></div>`;
 }
-
-function bindConfig() {
-  document.getElementById("btn-connect").addEventListener("click", async () => {
-    const bId = document.getElementById("inp-bin").value.trim();
-    const aKey = document.getElementById("inp-key").value.trim();
-    const errEl = document.getElementById("cfg-error");
-    const btn = document.getElementById("btn-connect");
-    if(!bId || !aKey) { errEl.textContent="Both fields are required."; errEl.style.display="block"; return; }
-    btn.disabled = true; btn.textContent = "Connecting…"; errEl.style.display="none";
-    try {
-      const data = await jbLoad(bId, aKey);
-      binId = bId; apiKey = aKey;
-      localStorage.setItem("jb_bin", bId);
-      localStorage.setItem("jb_key", aKey);
-      // Merge loaded data
-      state.player1 = {...DEFAULT_PLAYER, ...(data.player1||{}), certImages:{}};
-      state.player2 = {...DEFAULT_PLAYER, ...(data.player2||{}), certImages:{}};
-      startPolling();
-      render();
-    } catch(e) {
-      errEl.textContent = "Connection failed: " + e.message;
-      errEl.style.display = "block";
-      btn.disabled = false; btn.textContent = "Connect";
+ 
+function bindConfig(){
+  document.getElementById("btn-connect").addEventListener("click",async()=>{
+    const bId=document.getElementById("inp-bin").value.trim();
+    const aKey=document.getElementById("inp-key").value.trim();
+    const errEl=document.getElementById("cfg-error");
+    const btn=document.getElementById("btn-connect");
+    if(!bId||!aKey){errEl.textContent="Both fields are required.";errEl.style.display="block";return;}
+    btn.disabled=true;btn.textContent="Connecting…";errEl.style.display="none";
+    try{
+      const remote=await jbLoad(bId,aKey);
+      binId=bId;apiKey=aKey;
+      localStorage.setItem("jb_bin",bId);localStorage.setItem("jb_key",aKey);
+      mergeRemote(remote);
+      startPolling();render();
+    }catch(e){
+      errEl.textContent="Connection failed: "+e.message;errEl.style.display="block";
+      btn.disabled=false;btn.textContent="Connect";
     }
   });
 }
-
+ 
+// ── State merge ───────────────────────────────────────────────────────────────
+ 
+function mergeRemote(remote) {
+  if(!remote) return;
+  // Support old 2-player format (player1/player2 keys)
+  if(remote.players) {
+    state.players = remote.players.map((p,i)=>({
+      ...DEFAULT_PLAYER,...p,
+      certImages:{...(localImages[i]||{})}
+    }));
+    while(state.players.length>MAX_PLAYERS) state.players.pop();
+    state.modPin = remote.modPin || state.modPin || "";
+    state.version = 2;
+  } else if(remote.player1||remote.player2) {
+    // Legacy format — migrate
+    state.players = [
+      {...DEFAULT_PLAYER,...(remote.player1||{}),certImages:{...(localImages[0]||{})}},
+      {...DEFAULT_PLAYER,...(remote.player2||{}),certImages:{...(localImages[1]||{})}},
+    ];
+    state.modPin = remote.modPin || "";
+    state.version = 2;
+  }
+  // Ensure localImages array is sized correctly
+  while(localImages.length < state.players.length) localImages.push({});
+}
+ 
 // ── App Screen ────────────────────────────────────────────────────────────────
-
-function renderApp() {
-  const p1 = state.player1, p2 = state.player2;
-  const l1 = getLevel(p1.xp, p1.certs), l2 = getLevel(p2.xp, p2.certs);
-  const ph1 = getPhase(l1), ph2 = getPhase(l2);
-
+ 
+function renderApp(){
+  const ranked = getRankedPlayers();
+  const playerCount = state.players.length;
+  const gridClass = playerCount===3?"p3":playerCount===4?"p4":playerCount===5?"p5":"";
+ 
   return `
   <div class="app">
     <div class="header">
       <div class="header-eye">PRINCIPAL ENGINEER TRACK</div>
       <div class="header-title">Who clears it first?</div>
-      <div class="header-sub">
-        SC-300 → MD-102 → SC-401 · 45 Levels · 3,400 XP
+      <div class="header-sub">SC-300 → MD-102 → SC-401 · 45 Levels · 3,400 XP
         <span id="status-pill" class="status-pill" style="color:${statusColor}">${statusText}</span>
       </div>
-      <button class="btn-refresh" id="btn-refresh">↻ Refresh</button>
+      <div class="header-actions">
+        <button class="btn-sm" id="btn-refresh">↻ Refresh</button>
+        ${isMod ? `<span style="font-size:10px;color:#84CC16;border:1px solid #84CC1640;border-radius:4px;padding:3px 8px;">MOD ✓</span>` : `<button class="btn-sm btn-mod" id="btn-mod-login">Moderator</button>`}
+        ${isMod && playerCount < MAX_PLAYERS ? `<button class="btn-sm btn-add" id="btn-add-player">+ Add Player</button>` : ""}
+        <button class="btn-sm" id="btn-disconnect">Disconnect</button>
+      </div>
     </div>
-
+ 
     <div class="phase-track">
-      ${PHASES.map(p => {
-        const p1in = l1>=p.levels[0], p2in = l2>=p.levels[0];
-        const p1done = !!p1.certs[p.cert], p2done = !!p2.certs[p.cert];
-        return `
-        <div class="phase-card">
-          <div class="phase-label" style="color:${p.color}">PHASE ${p.id}</div>
-          <div class="phase-cert">${p.cert}</div>
-          <div class="phase-levels">Lvl ${p.levels[0]}–${p.levels[1]}</div>
+      ${PHASES.map(ph=>{
+        return `<div class="phase-card">
+          <div class="phase-label" style="color:${ph.color}">PHASE ${ph.id}</div>
+          <div class="phase-cert">${ph.cert}</div>
+          <div class="phase-levels">Lvl ${ph.levels[0]}–${ph.levels[1]}</div>
           <div class="phase-dots">
-            <div class="phase-dot" style="background:${p1done?"#F59E0B":p1in?p.color:"#222"}" title="${p1.name||"Player 1"}"></div>
-            <div class="phase-dot" style="background:${p2done?"#F59E0B":p2in?p.color:"#222"}" title="${p2.name||"Player 2"}"></div>
+            ${state.players.map((p,i)=>{
+              const lv=getLevel(p.xp,p.certs);
+              const inPhase=lv>=ph.levels[0];
+              const cleared=!!p.certs[ph.cert];
+              return `<div class="phase-dot" style="background:${p.dq?"#333":cleared?"#F59E0B":inPhase?ph.color:"#222"};opacity:${p.dq?0.4:1}" title="${p.name||"Player "+(i+1)}"></div>`;
+            }).join("")}
           </div>
-        </div>`}).join("")}
+        </div>`;
+      }).join("")}
     </div>
-
-    ${(p1.name||p2.name) ? `
-    <div class="vs-bar">
-      <div>
-        <div class="vs-level" style="color:${phaseColor(ph1)}">${l1}</div>
-        <div class="vs-name">${p1.name||"Player 1"}</div>
-      </div>
-      <div class="vs-text">VS</div>
-      <div>
-        <div class="vs-level" style="color:${phaseColor(ph2)}">${l2}</div>
-        <div class="vs-name">${p2.name||"Player 2"}</div>
-      </div>
-    </div>` : ""}
-
-    <div class="player-grid">
-      ${renderPlayerCard("player1", p1, p2, l1, l2)}
-      ${renderPlayerCard("player2", p2, p1, l2, l1)}
+ 
+    <div class="leaderboard">
+      <div class="lb-title">LEADERBOARD</div>
+      ${ranked.map((p,rank)=>{
+        const rankLabels=["🥇","🥈","🥉"];
+        const activePlayers = ranked.filter(x=>!x.dq);
+        const activeRank = activePlayers.indexOf(p);
+        const rankDisplay = p.dq ? "—" : (rankLabels[activeRank]||`#${activeRank+1}`);
+        const rankClass = p.dq?"":activeRank===0?"gold":activeRank===1?"silver":activeRank===2?"bronze":"";
+        return `<div class="lb-row" style="opacity:${p.dq?0.45:1}">
+          <div class="lb-rank ${rankClass}">${rankDisplay}</div>
+          <div class="lb-name" style="color:${p.dq?"#555":phaseColor(getPhase(p.level))}">${p.name||"Player "+(p.idx+1)}${p.dq?`<span class="lb-dq">DQ</span>`:""}</div>
+          <div class="lb-level" style="color:${p.dq?"#333":phaseColor(getPhase(p.level))}">${p.dq?"—":p.level}</div>
+          <div class="lb-xp">${p.dq?"":p.xp+" XP"}</div>
+        </div>`;
+      }).join("")}
     </div>
-
+ 
+    <div class="player-grid ${gridClass}">
+      ${state.players.map((_,i)=>renderPlayerCard(i)).join("")}
+    </div>
+ 
     <div class="footer">
       <span>Syncs every 30 seconds · Any device · Any browser</span>
-      <button class="btn-disconnect" id="btn-disconnect">Disconnect</button>
     </div>
   </div>`;
 }
-
-function renderPlayerCard(pid, p, opp, level, oppLevel) {
+ 
+function renderPlayerCard(idx){
+  const p = state.players[idx];
+  const level = getLevel(p.xp,p.certs);
   const phase = getPhase(level);
   const color = phaseColor(phase);
   const nextGate = [15,30,45].find(g=>g>level)||45;
   const nextCert = GATES[nextGate];
-  const phXP = getPhaseXP(p.xp, phase);
+  const phXP = getPhaseXP(p.xp,phase);
   const phXPNeeded = GATE_XP[nextGate];
   const certDone = !!p.certs[nextCert];
   const curLvlXP = THRESHOLDS[level]||0;
   const nxtLvlXP = THRESHOLDS[Math.min(level+1,45)]||THRESHOLDS[45];
-  const lvlPct = nxtLvlXP>curLvlXP ? ((p.xp-curLvlXP)/(nxtLvlXP-curLvlXP))*100 : 100;
-  const isLeading = opp.name && (level>oppLevel||(level===oppLevel&&p.xp>(opp.xp||0)));
-  const tab = activeTabs[pid];
-  const editing = nameEditing[pid];
-
+  const lvlPct = nxtLvlXP>curLvlXP?((p.xp-curLvlXP)/(nxtLvlXP-curLvlXP))*100:100;
+ 
+  // Leading: top non-DQ player
+  const ranked = getRankedPlayers();
+  const topActive = ranked.find(r=>!r.dq);
+  const isLeading = !p.dq && topActive && topActive.idx===idx && state.players.filter(x=>!x.dq).length>1;
+ 
+  const tab = activeTabs[idx]||"topics";
+  const editing = nameEditing[idx];
+ 
   return `
-  <div class="player-card" id="card-${pid}" style="border-color:${isLeading?color:"#222"};box-shadow:${isLeading?`0 0 24px ${color}33`:"none"}">
-    <div class="card-header">
+  <div class="player-card" id="card-${idx}" style="border-color:${p.dq?"#3a0808":isLeading?color:"#222"};box-shadow:${isLeading?`0 0 22px ${color}33`:"none"}">
+    ${p.dq?`<div class="dq-banner"><span class="dq-text">DISQUALIFIED</span>${isMod?`<button class="btn-undq" data-idx="${idx}">Reinstate</button>`:""}</div><div class="dq-overlay"></div>`:""}
+    <div class="card-header" style="opacity:${p.dq?0.5:1}">
       <div class="card-top">
-        <div>
+        <div style="flex:1;min-width:0">
           ${editing
-            ? `<input class="name-input" id="name-input-${pid}" value="${p.name}" placeholder="Enter name" style="border-bottom-color:${color}" />`
-            : `<div class="player-name ${p.name?"":"empty"}" id="name-display-${pid}" data-pid="${pid}">${p.name||"Click to name"}</div>`
+            ?`<input class="name-input" id="name-input-${idx}" value="${p.name}" placeholder="Enter name" style="border-bottom-color:${color}" />`
+            :`<div class="player-name ${p.name?"":"empty"}" id="name-display-${idx}" data-idx="${idx}">${p.name||"Click to name"}</div>`
           }
           <div class="player-phase" style="color:${color}">
             ${PHASES[phase-1].label} · ${PHASES[phase-1].cert}
             ${isLeading?`<span class="leading-badge">▲ LEADING</span>`:""}
           </div>
         </div>
-        <div class="level-display">
-          <div class="level-num" style="color:${color}">${level}</div>
+        <div class="level-display" style="margin-left:10px">
+          <div class="level-num" style="color:${p.dq?"#333":color}">${p.dq?"DQ":level}</div>
           <div class="level-lbl">LEVEL</div>
         </div>
       </div>
@@ -444,273 +562,311 @@ function renderPlayerCard(pid, p, opp, level, oppLevel) {
         <div class="bar-meta"><span>Level ${level} → ${Math.min(level+1,45)}</span><span>${p.xp} XP</span></div>
         <div class="bar-track"><div class="bar-fill" style="width:${Math.min(100,lvlPct)}%;background:${color}"></div></div>
       </div>
-      <div class="bar-wrap" style="margin-top:8px">
+      <div class="bar-wrap" style="margin-top:6px">
         <div class="bar-meta">
           <span>Gate: Lvl ${nextGate} (${nextCert})</span>
-          <span style="color:${certDone?"#F59E0B":"#555"}">${certDone?"CERT UPLOADED ✓":`${phXP} / ${phXPNeeded} XP`}</span>
+          <span style="color:${certDone?"#F59E0B":"#555"}">${certDone?"CERT UPLOADED ✓":`${phXP}/${phXPNeeded} XP`}</span>
         </div>
         <div class="bar-track"><div class="bar-fill" style="width:${certDone?100:Math.min(100,(phXP/phXPNeeded)*100)}%;background:${certDone?"#F59E0B":color}"></div></div>
       </div>
     </div>
-
-    <div class="tabs">
-      <button class="tab-btn ${tab==="topics"?"active":""}" data-pid="${pid}" data-tab="topics" style="color:${tab==="topics"?color:"#555"}">Topics</button>
-      <button class="tab-btn ${tab==="certs"?"active":""}" data-pid="${pid}" data-tab="certs" style="color:${tab==="certs"?color:"#555"}">Certifications</button>
+ 
+    <div class="tabs" style="opacity:${p.dq?0.4:1}">
+      <button class="tab-btn ${tab==="topics"?"active":""}" data-idx="${idx}" data-tab="topics" style="color:${tab==="topics"?color:"#555"}">Topics</button>
+      <button class="tab-btn ${tab==="certs"?"active":""}" data-idx="${idx}" data-tab="certs" style="color:${tab==="certs"?color:"#555"}">Certifications</button>
     </div>
-
-    <div class="card-body">
-      ${tab==="topics" ? renderTopics(pid, p, color) : renderCerts(pid, p)}
+ 
+    <div class="card-body" style="opacity:${p.dq?0.4:1};pointer-events:${p.dq?"none":"auto"}">
+      ${tab==="topics"?renderTopics(idx,p):renderCerts(idx,p)}
     </div>
+ 
+    ${isMod && !p.dq ? `
+    <div class="card-mod-bar">
+      <button class="btn-dq" data-idx="${idx}">Disqualify</button>
+    </div>` : ""}
   </div>`;
 }
-
-function renderTopics(pid, p, color) {
-  return TOPICS.map(t => {
-    const phColor = phaseColor(t.phase);
-    const gated = (t.phase===2 && !p.certs["SC-300"]) || (t.phase===3 && !p.certs["MD-102"]);
-    const earned = XP_COMPS.reduce((s,c)=>s+(p.topics[t.id]?.[c.id]?c.xp:0),0);
-    const isOpen = openTopics[pid+"_"+t.id];
+ 
+function renderTopics(idx,p){
+  return TOPICS.map(t=>{
+    const phColor=phaseColor(t.phase);
+    const gated=(t.phase===2&&!p.certs["SC-300"])||(t.phase===3&&!p.certs["MD-102"]);
+    const earned=XP_COMPS.reduce((s,c)=>s+(p.topics[t.id]?.[c.id]?c.xp:0),0);
+    const isOpen=openTopics[idx+"_"+t.id];
     return `
     <div class="topic-row">
-      <div class="topic-head ${gated?"gated":""}" ${gated?"":`data-pid="${pid}" data-tid="${t.id}"`} id="th-${pid}-${t.id}">
+      <div class="topic-head ${gated?"gated":""}" ${gated?"":`data-idx="${idx}" data-tid="${t.id}"`}>
         <div class="topic-name ${gated?"gated":""}">${t.name}</div>
         <div class="topic-xp" style="color:${earned>0?phColor:"#444"}">${earned}/200</div>
         ${gated?"":`<div class="topic-arrow">${isOpen?"▲":"▼"}</div>`}
       </div>
-      ${isOpen && !gated ? `
+      ${isOpen&&!gated?`
       <div class="topic-components">
         ${XP_COMPS.map(c=>`
         <label class="comp-row">
-          <input type="checkbox" data-pid="${pid}" data-tid="${t.id}" data-cid="${c.id}" ${p.topics[t.id]?.[c.id]?"checked":""} style="accent-color:${phColor}" />
+          <input type="checkbox" data-idx="${idx}" data-tid="${t.id}" data-cid="${c.id}" ${p.topics[t.id]?.[c.id]?"checked":""} style="accent-color:${phColor}" />
           <span class="comp-name">${c.label}</span>
           <span class="comp-xp" style="color:${p.topics[t.id]?.[c.id]?phColor:"#444"}">+${c.xp} XP</span>
         </label>`).join("")}
-      </div>` : ""}
+      </div>`:""}
     </div>`;
   }).join("");
 }
-
-function renderCerts(pid, p) {
+ 
+function renderCerts(idx,p){
   return `<div class="cert-list">
-    ${PHASES.map(ph => {
-      const locked = ph.id>1 && !p.certs[PHASES[ph.id-2].cert];
-      const img = localImages[pid][ph.cert] || p.certImages?.[ph.cert];
-      const color = ph.color;
+    ${PHASES.map(ph=>{
+      const locked=ph.id>1&&!p.certs[PHASES[ph.id-2].cert];
+      const img=localImages[idx]?.[ph.cert]||p.certImages?.[ph.cert];
+      const color=ph.color;
       return `
       <div class="cert-badge" style="border-color:${locked?"#333":color};background:${locked?"#111":color+"18"}">
-        <div class="cert-icon" style="background:${locked?"#222":color+"30"};cursor:${img?"zoom-in":"default"}" ${img?`data-pid="${pid}" data-cert="${ph.cert}" class="cert-icon cert-thumb"`:'class="cert-icon"'}>
+        <div class="cert-icon" style="background:${locked?"#222":color+"30"};cursor:${img?"zoom-in":"default"}" ${img?`data-idx="${idx}" data-cert="${ph.cert}" class="cert-icon cert-thumb"`:'class="cert-icon"'}>
           ${img?`<img src="${img}" alt="${ph.cert}" style="pointer-events:none" />`:(locked?"🔒":"🏅")}
         </div>
         <div class="cert-info">
           <div class="cert-name" style="color:${locked?"#555":color}">${ph.cert}</div>
           <div class="cert-status">${locked?"Gate locked":img?"Verified ✓":"Upload cert image"}</div>
         </div>
-        ${!locked ? `
+        ${!locked?`
         <div class="cert-actions">
-          ${img ? `
-            <button class="cert-btn cert-btn-view" data-pid="${pid}" data-cert="${ph.cert}">View</button>
-            <button class="cert-btn cert-btn-clear" data-pid="${pid}" data-cert="${ph.cert}">Clear</button>
-          ` : `
-          <label style="cursor:pointer">
+          ${img?`
+            <button class="cert-btn cert-btn-view" data-idx="${idx}" data-cert="${ph.cert}">View</button>
+            <button class="cert-btn cert-btn-clear" data-idx="${idx}" data-cert="${ph.cert}">Clear</button>
+          `:`<label style="cursor:pointer">
             <span class="cert-btn" style="background:${color};color:#000">Upload</span>
-            <input type="file" accept="image/*" data-pid="${pid}" data-cert="${ph.cert}" />
+            <input type="file" accept="image/*" data-idx="${idx}" data-cert="${ph.cert}" />
           </label>`}
-        </div>` : ""}
+        </div>`:""}
       </div>`;
     }).join("")}
     <div class="cert-note">Upload a screenshot of your passing score report to unlock the next gate.</div>
   </div>`;
 }
-
-// ── Lightbox ──────────────────────────────────────────────────────────────────
-
-function openLightbox(src, label) {
-  const lb = document.getElementById("lightbox");
-  document.getElementById("lb-img").src = src;
-  document.getElementById("lb-label").textContent = label + " — click anywhere to close";
-  lb.style.display = "flex";
-  document.body.style.overflow = "hidden";
-}
-
-function closeLightbox() {
-  document.getElementById("lightbox").style.display = "none";
-  document.body.style.overflow = "";
-}
-
-// ── Bind events ───────────────────────────────────────────────────────────────
-
-function bindApp() {
+ 
+// ── Bind App Events ───────────────────────────────────────────────────────────
+ 
+function bindApp(){
   // Refresh
-  document.getElementById("btn-refresh")?.addEventListener("click", ()=>loadRemote(false));
-
+  document.getElementById("btn-refresh")?.addEventListener("click",()=>loadRemote(false));
+ 
   // Disconnect
-  document.getElementById("btn-disconnect")?.addEventListener("click", ()=>{
+  document.getElementById("btn-disconnect")?.addEventListener("click",()=>{
     clearInterval(pollTimer);
-    localStorage.removeItem("jb_bin"); localStorage.removeItem("jb_key");
-    binId=""; apiKey=""; render();
+    localStorage.removeItem("jb_bin");localStorage.removeItem("jb_key");
+    binId="";apiKey="";isMod=false;render();
   });
-
-  // Name display click → edit
+ 
+  // Mod login
+  document.getElementById("btn-mod-login")?.addEventListener("click",()=>{
+    const isFirstPin = !state.modPin;
+    openModal(
+      isFirstPin?"Set Moderator PIN":"Moderator Login",
+      isFirstPin?"Choose a PIN (min 4 characters). You will need this to manage the competition.":"Enter your moderator PIN.",
+      ()=>{}  // action runs after PIN check inside checkPin
+    );
+  });
+ 
+  // Add player (mod only)
+  document.getElementById("btn-add-player")?.addEventListener("click",()=>{
+    if(state.players.length>=MAX_PLAYERS) return;
+    state.players.push({...DEFAULT_PLAYER});
+    localImages.push({});
+    scheduleSave();render();
+  });
+ 
+  // Name display → edit
   document.querySelectorAll("[id^=name-display-]").forEach(el=>{
-    el.addEventListener("click", ()=>{
-      const pid = el.dataset.pid;
-      nameEditing[pid]=true; render(); 
-      const inp = document.getElementById(`name-input-${pid}`);
-      if(inp){ inp.focus(); inp.select(); }
+    el.addEventListener("click",()=>{
+      const idx=parseInt(el.dataset.idx);
+      nameEditing[idx]=true;render();
+      const inp=document.getElementById(`name-input-${idx}`);
+      if(inp){inp.focus();inp.select();}
     });
   });
-
-  // Name input blur/enter
+ 
+  // Name input commit
   document.querySelectorAll("[id^=name-input-]").forEach(inp=>{
-    const pid = inp.id.replace("name-input-","");
-    function commit(){ nameEditing[pid]=false; state[pid].name=inp.value; scheduleSave(); render(); }
-    inp.addEventListener("blur", commit);
-    inp.addEventListener("keydown", e=>{ if(e.key==="Enter") commit(); });
+    const idx=parseInt(inp.id.replace("name-input-",""));
+    function commit(){nameEditing[idx]=false;state.players[idx].name=inp.value;scheduleSave();render();}
+    inp.addEventListener("blur",commit);
+    inp.addEventListener("keydown",e=>{if(e.key==="Enter")commit();});
   });
-
-  // Tab buttons
+ 
+  // Tabs
   document.querySelectorAll(".tab-btn").forEach(btn=>{
-    btn.addEventListener("click", ()=>{
-      activeTabs[btn.dataset.pid]=btn.dataset.tab; render();
+    btn.addEventListener("click",()=>{
+      activeTabs[parseInt(btn.dataset.idx)]=btn.dataset.tab;render();
     });
   });
-
-  // Topic row toggle
+ 
+  // Topic toggle
   document.querySelectorAll(".topic-head:not(.gated)").forEach(el=>{
-    if(!el.dataset.pid) return;
-    el.addEventListener("click", ()=>{
-      const key = el.dataset.pid+"_"+el.dataset.tid;
-      openTopics[key]=!openTopics[key]; render();
+    if(!el.dataset.idx) return;
+    el.addEventListener("click",()=>{
+      const key=el.dataset.idx+"_"+el.dataset.tid;
+      openTopics[key]=!openTopics[key];render();
     });
   });
-
+ 
   // Checkboxes
-  document.querySelectorAll("input[data-pid][data-tid][data-cid]").forEach(cb=>{
-    cb.addEventListener("change", ()=>{
-      const {pid,tid,cid} = cb.dataset;
-      if(!state[pid].topics[tid]) state[pid].topics[tid]={};
-      state[pid].topics[tid][cid]=cb.checked;
-      // Recalc XP
-      state[pid].xp = TOPICS.reduce((sum,t)=>
-        sum+XP_COMPS.reduce((s,c)=>s+(state[pid].topics[t.id]?.[c.id]?c.xp:0),0),0);
-      scheduleSave(); render();
+  document.querySelectorAll("input[data-idx][data-tid][data-cid]").forEach(cb=>{
+    cb.addEventListener("change",()=>{
+      const idx=parseInt(cb.dataset.idx);
+      const {tid,cid}=cb.dataset;
+      if(!state.players[idx].topics[tid]) state.players[idx].topics[tid]={};
+      state.players[idx].topics[tid][cid]=cb.checked;
+      state.players[idx].xp=TOPICS.reduce((sum,t)=>
+        sum+XP_COMPS.reduce((s,c)=>s+(state.players[idx].topics[t.id]?.[c.id]?c.xp:0),0),0);
+      scheduleSave();render();
     });
   });
-
+ 
   // Lightbox close
-  document.getElementById("lb-close")?.addEventListener("click", closeLightbox);
-  document.getElementById("lightbox")?.addEventListener("click", e=>{ if(e.target===document.getElementById("lightbox")) closeLightbox(); });
-
-  // Cert thumbnail click → fullscreen
+  document.getElementById("lb-close")?.addEventListener("click",closeLightbox);
+  document.getElementById("lightbox")?.addEventListener("click",e=>{
+    if(e.target===document.getElementById("lightbox"))closeLightbox();
+  });
+ 
+  // Cert thumbnail
   document.querySelectorAll(".cert-thumb").forEach(el=>{
-    el.addEventListener("click", ()=>{
-      const {pid, cert} = el.dataset;
-      const img = localImages[pid]?.[cert] || state[pid]?.certImages?.[cert];
-      if(img) openLightbox(img, cert);
+    el.addEventListener("click",()=>{
+      const idx=parseInt(el.dataset.idx),cert=el.dataset.cert;
+      const img=localImages[idx]?.[cert]||state.players[idx]?.certImages?.[cert];
+      if(img)openLightbox(img,cert);
     });
   });
-
-  // Cert view button
+ 
+  // Cert view
   document.querySelectorAll(".cert-btn-view").forEach(btn=>{
-    btn.addEventListener("click", ()=>{
-      const {pid, cert} = btn.dataset;
-      const img = localImages[pid]?.[cert] || state[pid]?.certImages?.[cert];
-      if(img) openLightbox(img, cert);
+    btn.addEventListener("click",()=>{
+      const idx=parseInt(btn.dataset.idx),cert=btn.dataset.cert;
+      const img=localImages[idx]?.[cert]||state.players[idx]?.certImages?.[cert];
+      if(img)openLightbox(img,cert);
     });
   });
-
-  // Cert clear button
+ 
+  // Cert clear
   document.querySelectorAll(".cert-btn-clear").forEach(btn=>{
-    btn.addEventListener("click", ()=>{
-      const {pid, cert} = btn.dataset;
-      if(!confirm(`Clear the ${cert} certificate for ${state[pid].name||pid}? This will re-lock the phase gate.`)) return;
-      delete localImages[pid][cert];
-      state[pid].certs[cert] = false;
-      if(state[pid].certImages) delete state[pid].certImages[cert];
-      scheduleSave(); render();
+    btn.addEventListener("click",()=>{
+      const idx=parseInt(btn.dataset.idx),cert=btn.dataset.cert;
+      const pname=state.players[idx].name||`Player ${idx+1}`;
+      if(!confirm(`Clear the ${cert} certificate for ${pname}? This will re-lock the phase gate.`))return;
+      delete localImages[idx][cert];
+      state.players[idx].certs[cert]=false;
+      if(state.players[idx].certImages)delete state.players[idx].certImages[cert];
+      scheduleSave();render();
     });
   });
-
-  // Cert uploads
-  document.querySelectorAll("input[type=file][data-pid][data-cert]").forEach(inp=>{
-    inp.addEventListener("change", ()=>{
-      const {pid,cert} = inp.dataset;
-      const file = inp.files[0]; if(!file) return;
-      const reader = new FileReader();
-      reader.onload = ev=>{
-        localImages[pid][cert]=ev.target.result;
-        state[pid].certs[cert]=true;
-        // Also save image to state for JSONbin (base64 may be large but we try)
-        if(!state[pid].certImages) state[pid].certImages={};
-        state[pid].certImages[cert]=ev.target.result;
-        scheduleSave(); render();
+ 
+  // Cert upload
+  document.querySelectorAll("input[type=file][data-idx][data-cert]").forEach(inp=>{
+    inp.addEventListener("change",()=>{
+      const idx=parseInt(inp.dataset.idx),cert=inp.dataset.cert;
+      const file=inp.files[0];if(!file)return;
+      const reader=new FileReader();
+      reader.onload=ev=>{
+        if(!localImages[idx])localImages[idx]={};
+        localImages[idx][cert]=ev.target.result;
+        state.players[idx].certs[cert]=true;
+        if(!state.players[idx].certImages)state.players[idx].certImages={};
+        state.players[idx].certImages[cert]=ev.target.result;
+        scheduleSave();render();
       };
       reader.readAsDataURL(file);
     });
   });
+ 
+  // DQ button
+  document.querySelectorAll(".btn-dq").forEach(btn=>{
+    btn.addEventListener("click",()=>{
+      const idx=parseInt(btn.dataset.idx);
+      const pname=state.players[idx].name||`Player ${idx+1}`;
+      requireMod("Confirm Disqualification",`Disqualify ${pname} from the competition? This can be reversed.`,()=>{
+        state.players[idx].dq=true;scheduleSave();render();
+      });
+    });
+  });
+ 
+  // Reinstate button
+  document.querySelectorAll(".btn-undq").forEach(btn=>{
+    btn.addEventListener("click",()=>{
+      const idx=parseInt(btn.dataset.idx);
+      const pname=state.players[idx].name||`Player ${idx+1}`;
+      requireMod("Confirm Reinstatement",`Reinstate ${pname} back into the competition?`,()=>{
+        state.players[idx].dq=false;scheduleSave();render();
+      });
+    });
+  });
+ 
+  // Modal confirm
+  document.getElementById("modal-confirm")?.addEventListener("click",()=>{
+    checkPin(document.getElementById("modal-pin").value);
+  });
+  document.getElementById("modal-pin")?.addEventListener("keydown",e=>{
+    if(e.key==="Enter")checkPin(document.getElementById("modal-pin").value);
+  });
+  document.getElementById("modal-cancel")?.addEventListener("click",closeModal);
 }
-
+ 
+// ── Render ────────────────────────────────────────────────────────────────────
+ 
+function render(){
+  const root=document.getElementById("root");
+  if(!binId||!apiKey){root.innerHTML=renderConfig();bindConfig();return;}
+  root.innerHTML=renderApp();bindApp();
+}
+ 
 // ── Save / Load / Poll ────────────────────────────────────────────────────────
-
-function setStatus(text, color) {
-  statusText=text; statusColor=color;
+ 
+function setStatus(text,color){
+  statusText=text;statusColor=color;
   const el=document.getElementById("status-pill");
-  if(el){ el.textContent=text; el.style.color=color; }
+  if(el){el.textContent=text;el.style.color=color;}
 }
-
-function scheduleSave() {
-  clearTimeout(saveTimer);
-  setStatus("Saving…","#777");
-  saveTimer = setTimeout(async ()=>{
-    try {
-      await jbSave(binId, apiKey, state);
-      setStatus("Saved ✓","#84CC16");
-      setTimeout(()=>setStatus("","#555"),2500);
-    } catch(e) {
-      setStatus("Save failed","#ef4444");
-    }
-  }, 800);
+ 
+function scheduleSave(){
+  clearTimeout(saveTimer);setStatus("Saving…","#777");
+  saveTimer=setTimeout(async()=>{
+    try{await jbSave(binId,apiKey,state);setStatus("Saved ✓","#84CC16");setTimeout(()=>setStatus("","#555"),2500);}
+    catch(e){setStatus("Save failed","#ef4444");}
+  },800);
 }
-
-async function loadRemote(silent=false) {
-  if(!silent) setStatus("Syncing…","#aaaaaa");
-  try {
-    const remote = await jbLoad(binId, apiKey);
-    state.player1 = {...DEFAULT_PLAYER,...(remote.player1||{}), certImages:{...localImages.player1,...(remote.player1?.certImages||{})}};
-    state.player2 = {...DEFAULT_PLAYER,...(remote.player2||{}), certImages:{...localImages.player2,...(remote.player2?.certImages||{})}};
-    if(!silent) setStatus("","#555");
+ 
+async function loadRemote(silent=false){
+  if(!silent)setStatus("Syncing…","#aaaaaa");
+  try{
+    const remote=await jbLoad(binId,apiKey);
+    mergeRemote(remote);
+    if(!silent)setStatus("","#555");
     render();
-  } catch(e) {
-    if(!silent) setStatus("Sync failed","#ef4444");
-  }
+  }catch(e){if(!silent)setStatus("Sync failed","#ef4444");}
 }
-
-function startPolling() {
+ 
+function startPolling(){
   clearInterval(pollTimer);
-  pollTimer = setInterval(()=>loadRemote(true), 30000);
+  pollTimer=setInterval(()=>loadRemote(true),30000);
 }
-
+ 
 // ── Boot ──────────────────────────────────────────────────────────────────────
-
-document.addEventListener("keydown", e=>{ if(e.key==="Escape") closeLightbox(); });
-
-async function boot() {
-  if(binId && apiKey) {
-    document.getElementById("root").innerHTML = `<div style="min-height:100vh;display:flex;align-items:center;justify-content:center"><div style="color:#BEF264;font-size:14px;font-weight:600">Loading scoreboard…</div></div>`;
-    try {
-      const remote = await jbLoad(binId, apiKey);
-      state.player1 = {...DEFAULT_PLAYER,...(remote.player1||{}),certImages:{}};
-      state.player2 = {...DEFAULT_PLAYER,...(remote.player2||{}),certImages:{}};
+ 
+document.addEventListener("keydown",e=>{if(e.key==="Escape"){closeLightbox();closeModal();}});
+ 
+async function boot(){
+  if(binId&&apiKey){
+    document.getElementById("root").innerHTML=`<div style="min-height:100vh;display:flex;align-items:center;justify-content:center"><div style="color:#BEF264;font-size:14px;font-weight:600">Loading scoreboard…</div></div>`;
+    try{
+      const remote=await jbLoad(binId,apiKey);
+      mergeRemote(remote);
       startPolling();
-    } catch(e) {
-      // Credentials stored but load failed — clear and show config
-      localStorage.removeItem("jb_bin"); localStorage.removeItem("jb_key");
-      binId=""; apiKey="";
+    }catch(e){
+      localStorage.removeItem("jb_bin");localStorage.removeItem("jb_key");
+      binId="";apiKey="";
     }
   }
   render();
 }
-
+ 
 boot();
 </script>
 </body>
