@@ -244,7 +244,9 @@ const GATES   = {15:"SC-300",30:"MD-102",45:"SC-401"};
 const GATE_XP = {15:1190,30:1190,45:1190};
 const MAX_PLAYERS = 5;
 
-const DEFAULT_PLAYER = {name:"",xp:0,topics:{},certs:{},certImages:{},dq:false};
+const WORKER_URL = "https://pe-track-quiz.free-code5403.workers.dev";
+
+const DEFAULT_PLAYER = {name:"",xp:0,topics:{},certs:{},certImages:{},certUrls:{},dq:false};
 
 // ── App State ─────────────────────────────────────────────────────────────────
 
@@ -257,6 +259,7 @@ let openTopics    = {};
 let activeTabs    = {};
 let nameEditing   = {};
 let isMod         = false;
+let uploadingCert = null; // "idx-certName" while uploading
 let statusText    = "";
 let statusColor   = "#555";
 let saveTimer     = null;
@@ -451,7 +454,8 @@ function mergeRemote(remote) {
   if(remote.players) {
     state.players = remote.players.map((p,i)=>({
       ...DEFAULT_PLAYER,...p,
-      certImages:{...(localImages[i]||{})}
+      certImages:{},
+      certUrls:{...(p.certUrls||{})}
     }));
     while(state.players.length>MAX_PLAYERS) state.players.pop();
     state.modPin = remote.modPin || state.modPin || "";
@@ -459,8 +463,8 @@ function mergeRemote(remote) {
   } else if(remote.player1||remote.player2) {
     // Legacy format — migrate
     state.players = [
-      {...DEFAULT_PLAYER,...(remote.player1||{}),certImages:{...(localImages[0]||{})}},
-      {...DEFAULT_PLAYER,...(remote.player2||{}),certImages:{...(localImages[1]||{})}},
+      {...DEFAULT_PLAYER,...(remote.player1||{}),certImages:{},certUrls:{}},
+      {...DEFAULT_PLAYER,...(remote.player2||{}),certImages:{},certUrls:{}},
     ];
     state.modPin = remote.modPin || "";
     state.version = 2;
@@ -639,7 +643,7 @@ function renderCerts(idx,p){
   return `<div class="cert-list">
     ${PHASES.map(ph=>{
       const locked=ph.id>1&&!p.certs[PHASES[ph.id-2].cert];
-      const img=localImages[idx]?.[ph.cert]||p.certImages?.[ph.cert];
+      const img=p.certUrls?.[ph.cert]||null;
       const color=ph.color;
       return `
       <div class="cert-badge" style="border-color:${locked?"#333":color};background:${locked?"#111":color+"18"}">
@@ -653,11 +657,13 @@ function renderCerts(idx,p){
         ${!locked?`
         <div class="cert-actions">
           ${img?`
-            <button class="cert-btn cert-btn-view" data-idx="${idx}" data-cert="${ph.cert}">View</button>
+            <button class="cert-btn cert-btn-view" data-idx="${idx}" data-cert="${ph.cert}" data-url="${img}">View</button>
             <button class="cert-btn cert-btn-clear" data-idx="${idx}" data-cert="${ph.cert}">Clear</button>
           `:`<label style="cursor:pointer">
-            <span class="cert-btn" style="background:${color};color:#000">Upload</span>
-            <input type="file" accept="image/*" data-idx="${idx}" data-cert="${ph.cert}" />
+            <span class="cert-btn ${uploadingCert===idx+"-"+ph.cert?"uploading":""}" style="background:${color};color:#000;opacity:${uploadingCert===idx+"-"+ph.cert?0.6:1}">
+              ${uploadingCert===idx+"-"+ph.cert?"Uploading…":"Upload"}
+            </span>
+            <input type="file" accept="image/*" data-idx="${idx}" data-cert="${ph.cert}" ${uploadingCert===idx+"-"+ph.cert?"disabled":""} />
           </label>`}
         </div>`:""}
       </div>`;
@@ -750,52 +756,74 @@ function bindApp(){
     if(e.target===document.getElementById("lightbox"))closeLightbox();
   });
 
+  // Cert view — use data-url attribute now
+  document.querySelectorAll(".cert-btn-view").forEach(btn=>{
+    btn.addEventListener("click",()=>{
+      const url=btn.dataset.url||"";
+      if(url)openLightbox(url,btn.dataset.cert);
+    });
+  });
+
   // Cert thumbnail
   document.querySelectorAll(".cert-thumb").forEach(el=>{
     el.addEventListener("click",()=>{
       const idx=parseInt(el.dataset.idx),cert=el.dataset.cert;
-      const img=localImages[idx]?.[cert]||state.players[idx]?.certImages?.[cert];
-      if(img)openLightbox(img,cert);
+      const url=state.players[idx]?.certUrls?.[cert]||"";
+      if(url)openLightbox(url,cert);
     });
   });
 
-  // Cert view
-  document.querySelectorAll(".cert-btn-view").forEach(btn=>{
-    btn.addEventListener("click",()=>{
-      const idx=parseInt(btn.dataset.idx),cert=btn.dataset.cert;
-      const img=localImages[idx]?.[cert]||state.players[idx]?.certImages?.[cert];
-      if(img)openLightbox(img,cert);
-    });
-  });
-
-  // Cert clear
+  // Cert clear — delete from GitHub via Worker then clear state
   document.querySelectorAll(".cert-btn-clear").forEach(btn=>{
-    btn.addEventListener("click",()=>{
+    btn.addEventListener("click",async ()=>{
       const idx=parseInt(btn.dataset.idx),cert=btn.dataset.cert;
       const pname=state.players[idx].name||`Player ${idx+1}`;
       if(!confirm(`Clear the ${cert} certificate for ${pname}? This will re-lock the phase gate.`))return;
-      delete localImages[idx][cert];
+      try{
+        await fetch(`${WORKER_URL}/delete-cert`,{
+          method:"POST",
+          headers:{"Content-Type":"application/json"},
+          body:JSON.stringify({playerIdx:idx,certName:cert})
+        });
+      }catch(e){ /* non-fatal — still clear locally */ }
       state.players[idx].certs[cert]=false;
-      if(state.players[idx].certImages)delete state.players[idx].certImages[cert];
+      if(state.players[idx].certUrls)delete state.players[idx].certUrls[cert];
       scheduleSave();render();
     });
   });
 
-  // Cert upload
+  // Cert upload — push to GitHub via Worker
   document.querySelectorAll("input[type=file][data-idx][data-cert]").forEach(inp=>{
-    inp.addEventListener("change",()=>{
+    inp.addEventListener("change",async ()=>{
       const idx=parseInt(inp.dataset.idx),cert=inp.dataset.cert;
       const file=inp.files[0];if(!file)return;
-      const reader=new FileReader();
-      reader.onload=ev=>{
-        if(!localImages[idx])localImages[idx]={};
-        localImages[idx][cert]=ev.target.result;
+      uploadingCert=idx+"-"+cert;render();
+      try{
+        // Read file as base64
+        const base64 = await new Promise((res,rej)=>{
+          const r=new FileReader();
+          r.onload=ev=>res(ev.target.result.split(",")[1]); // strip data:...;base64,
+          r.onerror=rej;
+          r.readAsDataURL(file);
+        });
+        // Send to Worker
+        const workerRes=await fetch(`${WORKER_URL}/upload-cert`,{
+          method:"POST",
+          headers:{"Content-Type":"application/json"},
+          body:JSON.stringify({playerIdx:idx,certName:cert,imageBase64:base64,mimeType:file.type})
+        });
+        const data=await workerRes.json();
+        if(data.error) throw new Error(data.error);
+        // Save GitHub URL to state
+        if(!state.players[idx].certUrls) state.players[idx].certUrls={};
+        state.players[idx].certUrls[cert]=data.url+"?t="+Date.now(); // cache-bust
         state.players[idx].certs[cert]=true;
-        if(!state.players[idx].certImages)state.players[idx].certImages={};
-        state.players[idx].certImages[cert]=ev.target.result;
-        scheduleSave();render();
-      };
-      reader.readAsDataURL(file);
+        scheduleSave();
+      }catch(e){
+        alert(`Upload failed: ${e.message}`);
+      }finally{
+        uploadingCert=null;render();
+      }
     });
   });
 
