@@ -783,7 +783,7 @@ function bindApp(){
         await fetch(`${WORKER_URL}/delete-cert`,{
           method:"POST",
           headers:{"Content-Type":"application/json"},
-          body:JSON.stringify({playerIdx:idx,certName:cert})
+          body:JSON.stringify({playerIdx:idx,playerName:state.players[idx].name||"",certName:cert})
         });
       }catch(e){ /* non-fatal — still clear locally */ }
       state.players[idx].certs[cert]=false;
@@ -810,7 +810,7 @@ function bindApp(){
         const workerRes=await fetch(`${WORKER_URL}/upload-cert`,{
           method:"POST",
           headers:{"Content-Type":"application/json"},
-          body:JSON.stringify({playerIdx:idx,certName:cert,imageBase64:base64,mimeType:file.type})
+          body:JSON.stringify({playerIdx:idx,playerName:state.players[idx].name||"",certName:cert,imageBase64:base64,mimeType:file.type})
         });
         const data=await workerRes.json();
         if(data.error) throw new Error(data.error);
